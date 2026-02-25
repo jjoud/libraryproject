@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <title>List of Books</title>
+  <meta name="keywords" content="Books, recent, Learning, library">
+  <meta name="description" content="Books website">
+  <meta name="author" content="author name">
+  <link rel="icon" href="{% static 'images/qu-icon.png' %}">
+  <meta charset="UTF-8">
+  <style>  /* add internal css */
+    h1{
+      color: green;
+    }
+ 
+    h2{
+      color: lightskyblue;
+    }
+ 
+    p {
+      font-family: verdana;
+      font-size: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="{% static 'styles/styles.css' %}"> <!-- include css file -->
+</head>
+<body>
+  <div class="topnav"> <!-- add class attribute -->
+    <a href="{% url 'books.index' %}">Home</a>
+    <a class="active" href="{% url 'books.list_books' %}">List Books</a>
+    <a href="{% url 'books.aboutus' %}">About</a>
+  </div>
+
+  <h1>List of Books</h1>
+  <a href="{% url 'books.view_one_book' 1 %}"><h2>Internet & World Wide Web How to Program</h2></a>
+  <a href="{% url 'books.view_one_book' 1 %}"><img src="{% static 'images/book1.png' %}" alt="Book1 img desc" width="200" height="200"></a>
+  <hr>
+  <h2>2) C++ How to Program, Late Objects Version</h2>
+  <img src="{% static 'images/book2.png' %}" alt="Book2 img desc" width="200" height="200">
+  <hr>
+  <h2>3) Images in Another Folder</h2>
+  <img src="{% static 'images/book3.png' %}" alt="Book3 img desc" width="200" height="200">
+  <hr>
+</body>
+</html>
