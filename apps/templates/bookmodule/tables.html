@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tables</title>
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+</head>
+<body>
+
+<div class="tables-page">
+
+    <!-- ===================== TABLE 1 ===================== -->
+    <div class="table-title">Table 1: Table<br>of Fruits and<br>Their Prices</div>
+
+    <div class="table1-wrap">
+        <table class="table1">
+            <thead>
+                <tr>
+                    <th>Fruit</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>Apple</td>
+                    <td>$0.25</td>
+                </tr>
+                <tr>
+                    <td>Orange</td>
+                    <td>$0.50</td>
+                </tr>
+                <tr>
+                    <td>Banana</td>
+                    <td>$1.00</td>
+                </tr>
+                <tr>
+                    <td>Pineapple</td>
+                    <td>$2.00</td>
+                </tr>
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td>Total</td>
+                    <td>$3.75</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <!-- ===================== TABLE 2 ===================== -->
+    <div class="table-title">Table 2: A more complex sample table</div>
+
+    <div class="table2-wrap">
+        <table class="table2">
+            <tr>
+                <!-- Left image cell spanning 2 rows -->
+                <td class="img-cell" rowspan="2">
+                    <img src="{% static 'images/desert.jpg' %}" alt="Desert image">
+                </td>
+
+                <!-- Big heading spanning 4 columns -->
+                <td class="big-head" colspan="4">
+                    Camelid comparison<br>
+                    Approximate as of 6/2011
+                </td>
+            </tr>
+
+            <tr>
+                <th># of humps</th>
+                <th>Indigenous region</th>
+                <th>Spits?</th>
+                <th>Produces wool?</th>
+            </tr>
+
+            <tr>
+                <td class="row-label">Dromedary</td>
+                <td>1</td>
+                <td>Arabian Peninsula</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td class="row-label">Camels (bactrian)</td>
+                <td>2</td>
+                <td>Africa/Asia</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+
+            <tr>
+                <td class="row-label">Llamas</td>
+                <td>1</td>
+                <td>Andes Mountains</td>
+                <td>Yes</td>
+                <td>Yes</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

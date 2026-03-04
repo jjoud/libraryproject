@@ -1,0 +1,207 @@
+/* Reset default spacing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Page background (optional) */
+body {
+  background: #ffffff;
+  font-family: Arial, sans-serif;
+}
+
+.link-bar {
+  display: block;           /* Make the entire area clickable */
+  width: 100%;              /* Full width */
+  text-align: center;       /* Center text */
+  padding: 22px 10px;       /* Vertical spacing like the screenshot */
+  text-decoration: underline;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* -------------------------
+   BAR #1 (Green background)
+   ------------------------- */
+#bar1 {
+  background-color: #aef6c3;  /* Light green */
+  color: #ff0000;             /* Red text */
+}
+
+/* -------------------------
+   BAR #2 (Gray background)
+   ------------------------- */
+#bar2 {
+  background-color: #555555;  /* Dark gray */
+  color: #ffd000;             /* Yellow text */
+}
+
+/* -------------------------
+   BAR #3 (Black background)
+   ------------------------- */
+#bar3 {
+  background-color: #000000;  /* Black */
+  color: #ffffff;             /* White text */
+}
+
+/*Link states (apply to ALL bars)*/
+
+/* Visited link */
+.link-bar:visited {
+  opacity: 0.95; /* Slight change to show it's visited */
+}
+
+/* Hover state */
+.link-bar:hover {
+  filter: brightness(0.95); /* Slight darkening on hover */
+}
+
+/* Active state (while clicking) */
+.link-bar:active {
+  filter: brightness(0.85);
+}
+/* =========================================================
+   Task 2 - Text Formatting Page
+   Style for main heading
+   ========================================================= */
+
+.formatting-title {
+    background-color: #d9d6bd;   /* light beige background */
+    color: #1e7d22;              /* green text */
+    padding: 15px 20px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* =========================================================
+   Task 3 - Nested Listing Page
+   ========================================================= */
+
+/* Page title styling */
+.listing-title {
+    background-color: #5f9799;   /* teal background */
+    color: white;
+    padding: 20px;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* Add spacing to list area */
+.list-container {
+    padding: 25px 40px;
+    font-size: 18px;
+}
+
+/* Improve list spacing */
+.list-container ul {
+    list-style-type: disc;
+    margin-left: 30px;
+}
+
+.list-container ul ul {
+    list-style-type: circle;
+    margin-left: 25px;
+}
+
+.list-container ol {
+    margin-left: 30px;
+}
+
+.list-container li {
+    margin: 6px 0;
+}
+/* =========================================================
+   Task 4 - Tables Page (layout + table styling)
+   ========================================================= */
+
+.tables-page {
+  padding: 20px;
+}
+
+/* Center titles above tables */
+.table-title {
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0 6px 0;
+}
+
+/* ================= TABLE 1 (DOUBLE BORDER EXACT MATCH) ================= */
+
+.table1-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 6px;
+  font-family: "Times New Roman", serif;
+}
+
+.table1-wrap {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* IMPORTANT: double border effect */
+.table1 {
+  margin: 0 auto;
+  border-collapse: separate;     
+  border-spacing: 0;
+  border: 4px double #ffffff;       
+  font-family: "Times New Roman", serif;
+  font-size: 16px;
+}
+
+/* cells */
+.table1 th,
+.table1 td {
+  border: 3px double #666;     
+  padding: 4px 12px;
+  text-align: center;
+}
+
+.table1 th {
+  font-weight: bold;
+}
+
+.table1 .total-row td {
+  font-weight: bold;
+}
+
+/* ---------------- Table 2 (complex) ---------------- */
+.table2-wrap {
+  margin-top: 10px;
+}
+
+.table2 {
+  width: 85%;
+  margin: 0 auto;           /* center the big table */
+  border-collapse: collapse;
+}
+
+.table2 th,
+.table2 td {
+  border: 2px solid #777;
+  padding: 6px 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.table2 .img-cell {
+  width: 260px;
+}
+
+.table2 .img-cell img {
+  width: 240px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.table2 .big-head {
+  font-weight: bold;
+  padding: 14px 10px;
+  height: 90px;
+}
+
+.table2 .row-label {
+  font-weight: bold;
+}
