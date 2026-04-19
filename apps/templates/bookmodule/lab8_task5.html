@@ -1,0 +1,32 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 8 Task 5{% endblock title %}
+
+{% block content %}
+<h2>Book Aggregation Statistics</h2>
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <tbody>
+        <tr>
+            <th style="padding: 10px; text-align: left;">Number of Books</th>
+            <td style="padding: 10px;">{{ stats.book_count }}</td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; text-align: left;">Total Price</th>
+            <td style="padding: 10px;">{{ stats.total_price }}</td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; text-align: left;">Average Price</th>
+            <td style="padding: 10px;">{{ stats.average_price }}</td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; text-align: left;">Maximum Price</th>
+            <td style="padding: 10px;">{{ stats.max_price }}</td>
+        </tr>
+        <tr>
+            <th style="padding: 10px; text-align: left;">Minimum Price</th>
+            <td style="padding: 10px;">{{ stats.min_price }}</td>
+        </tr>
+    </tbody>
+</table>
+{% endblock content %}
