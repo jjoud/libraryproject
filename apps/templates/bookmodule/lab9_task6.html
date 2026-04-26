@@ -1,0 +1,37 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 9 Task 6{% endblock title %}
+
+{% block content %}
+<h2>Filtered Book Count for Each Publisher</h2>
+<p>Books must have price greater than 50 and quantity between 1 and 4.</p>
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f2f2f2; text-align: left;">
+            <th style="padding: 10px;">Publisher</th>
+            <th style="padding: 10px;">Matching Books</th>
+            <th style="padding: 10px;">Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for publisher in publishers %}
+        <tr>
+            <td style="padding: 10px;">{{ publisher.name }}</td>
+            <td style="padding: 10px;">
+                {% for book in publisher.filtered_books %}
+                    {{ book.title }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No matching books
+                {% endfor %}
+            </td>
+            <td style="padding: 10px;">{{ publisher.qualifying_books_count }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3" style="text-align: center; padding: 10px;">No publishers found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

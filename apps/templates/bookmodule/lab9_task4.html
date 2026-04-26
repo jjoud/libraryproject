@@ -1,0 +1,32 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 9 Task 4{% endblock title %}
+
+{% block content %}
+<h2>Average, Minimum, and Maximum Book Price for Each Publisher</h2>
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f2f2f2; text-align: left;">
+            <th style="padding: 10px;">Publisher</th>
+            <th style="padding: 10px;">Average Price</th>
+            <th style="padding: 10px;">Minimum Price</th>
+            <th style="padding: 10px;">Maximum Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for publisher in publishers %}
+        <tr>
+            <td style="padding: 10px;">{{ publisher.name }}</td>
+            <td style="padding: 10px;">{{ publisher.average_price|floatformat:2 }}</td>
+            <td style="padding: 10px;">{{ publisher.min_price|floatformat:2 }}</td>
+            <td style="padding: 10px;">{{ publisher.max_price|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="text-align: center; padding: 10px;">No publishers with books found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

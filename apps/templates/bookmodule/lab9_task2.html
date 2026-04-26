@@ -1,0 +1,38 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 9 Task 2{% endblock title %}
+
+{% block content %}
+<h2>Publishers With Total Book Stock</h2>
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f2f2f2; text-align: left;">
+            <th style="padding: 10px;">Publisher</th>
+            <th style="padding: 10px;">Location</th>
+            <th style="padding: 10px;">Books</th>
+            <th style="padding: 10px;">Total Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for publisher in publishers %}
+        <tr>
+            <td style="padding: 10px;">{{ publisher.name }}</td>
+            <td style="padding: 10px;">{{ publisher.location }}</td>
+            <td style="padding: 10px;">
+                {% for book in publisher.book_set.all %}
+                    {{ book.title }}{% if not forloop.last %}, {% endif %}
+                {% empty %}
+                    No books
+                {% endfor %}
+            </td>
+            <td style="padding: 10px;">{{ publisher.total_book_stock }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" style="text-align: center; padding: 10px;">No publishers found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
