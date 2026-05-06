@@ -1,0 +1,60 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 9 Part 1 - {{ page_title }}{% endblock title %}
+
+{% block content %}
+<h1>{{ page_title }}</h1>
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+
+    <p>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" value="{{ book.title }}" required>
+    </p>
+
+    <p>
+        <label for="author">Author:</label><br>
+        <input type="text" id="author" name="author" value="{{ book.author }}">
+    </p>
+
+    <p>
+        <label for="publisher">Publisher:</label><br>
+        <select id="publisher" name="publisher">
+            <option value="">No publisher</option>
+            {% for publisher in publishers %}
+            <option value="{{ publisher.id }}" {% if book.publisher_id == publisher.id %}selected{% endif %}>
+                {{ publisher.name }}
+            </option>
+            {% endfor %}
+        </select>
+    </p>
+
+    <p>
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price" value="{{ book.price|default:0 }}" step="0.01" min="0">
+    </p>
+
+    <p>
+        <label for="edition">Edition:</label><br>
+        <input type="number" id="edition" name="edition" value="{{ book.edition|default:1 }}" min="1">
+    </p>
+
+    <p>
+        <label for="quantity">Quantity:</label><br>
+        <input type="number" id="quantity" name="quantity" value="{{ book.quantity|default:1 }}" min="0">
+    </p>
+
+    <p>
+        <label for="rating">Rating:</label><br>
+        <input type="number" id="rating" name="rating" value="{{ book.rating|default:1 }}" min="1" max="5">
+    </p>
+
+    <button type="submit">{{ button_text }}</button>
+    <a href="{% url 'books.lab9_part1_listbooks' %}">Cancel</a>
+</form>
+{% endblock content %}

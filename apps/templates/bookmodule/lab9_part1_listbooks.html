@@ -1,0 +1,50 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 9 Part 1 - List Books{% endblock title %}
+
+{% block content %}
+<h1>Books</h1>
+
+<p>
+    <a href="{% url 'books.lab9_part1_addbook' %}">Add New Book</a>
+</p>
+
+<table border="1" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+    <thead>
+        <tr style="background-color: #f2f2f2; text-align: left;">
+            <th style="padding: 10px;">ID</th>
+            <th style="padding: 10px;">Title</th>
+            <th style="padding: 10px;">Author</th>
+            <th style="padding: 10px;">Publisher</th>
+            <th style="padding: 10px;">Price</th>
+            <th style="padding: 10px;">Edition</th>
+            <th style="padding: 10px;">Quantity</th>
+            <th style="padding: 10px;">Rating</th>
+            <th style="padding: 10px;">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td style="padding: 10px;">{{ book.id }}</td>
+            <td style="padding: 10px;">{{ book.title }}</td>
+            <td style="padding: 10px;">{{ book.author|default:"No author" }}</td>
+            <td style="padding: 10px;">{{ book.publisher.name|default:"No publisher" }}</td>
+            <td style="padding: 10px;">{{ book.price }}</td>
+            <td style="padding: 10px;">{{ book.edition }}</td>
+            <td style="padding: 10px;">{{ book.quantity }}</td>
+            <td style="padding: 10px;">{{ book.rating }}</td>
+            <td style="padding: 10px;">
+                <a href="{% url 'books.lab9_part1_editbook' book.id %}">Edit</a>
+                |
+                <a href="{% url 'books.lab9_part1_deletebook' book.id %}">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="9" style="text-align: center; padding: 10px;">No books found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}

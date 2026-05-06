@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 from django.db.models import Avg, Count, Max, Min, Sum
 from django.db.models.functions import Coalesce
 
+from .forms import BookForm
 from .models import Book, Publisher, Student
 #python manage.py runserver
 
@@ -235,3 +236,153 @@ def lab9_task6(request):
         'bookmodule/lab9_task6.html',
         {'publishers': publishers},
     )
+
+
+def lab9_part1_listbooks(request):
+    books = Book.objects.select_related('publisher').order_by('id')
+    return render(
+        request,
+        'bookmodule/lab9_part1_listbooks.html',
+        {'books': books},
+    )
+
+
+def __lab9_part1_save_book_from_post(book, post_data):
+    book.title = post_data.get('title', '').strip()
+    book.author = post_data.get('author', '').strip()
+    book.price = float(post_data.get('price') or 0)
+    book.edition = int(post_data.get('edition') or 1)
+    book.quantity = int(post_data.get('quantity') or 1)
+    book.rating = int(post_data.get('rating') or 1)
+
+    publisher_id = post_data.get('publisher')
+    book.publisher = Publisher.objects.filter(id=publisher_id).first() if publisher_id else None
+    book.save()
+
+
+def lab9_part1_addbook(request):
+    publishers = Publisher.objects.order_by('name')
+
+    if request.method == 'POST':
+        try:
+            __lab9_part1_save_book_from_post(Book(), request.POST)
+            return redirect('books.lab9_part1_listbooks')
+        except ValueError:
+            return render(
+                request,
+                'bookmodule/lab9_part1_book_form.html',
+                {
+                    'book': request.POST,
+                    'publishers': publishers,
+                    'page_title': 'Add Book',
+                    'button_text': 'Add Book',
+                    'error': 'Please enter valid numeric values for price, edition, quantity, and rating.',
+                },
+            )
+
+    return render(
+        request,
+        'bookmodule/lab9_part1_book_form.html',
+        {
+            'publishers': publishers,
+            'page_title': 'Add Book',
+            'button_text': 'Add Book',
+        },
+    )
+
+
+def lab9_part1_editbook(request, id):
+    book = get_object_or_404(Book, id=id)
+    publishers = Publisher.objects.order_by('name')
+
+    if request.method == 'POST':
+        try:
+            __lab9_part1_save_book_from_post(book, request.POST)
+            return redirect('books.lab9_part1_listbooks')
+        except ValueError:
+            return render(
+                request,
+                'bookmodule/lab9_part1_book_form.html',
+                {
+                    'book': book,
+                    'publishers': publishers,
+                    'page_title': 'Edit Book',
+                    'button_text': 'Update Book',
+                    'error': 'Please enter valid numeric values for price, edition, quantity, and rating.',
+                },
+            )
+
+    return render(
+        request,
+        'bookmodule/lab9_part1_book_form.html',
+        {
+            'book': book,
+            'publishers': publishers,
+            'page_title': 'Edit Book',
+            'button_text': 'Update Book',
+        },
+    )
+
+
+def lab9_part1_deletebook(request, id):
+    book = get_object_or_404(Book, id=id)
+    book.delete()
+    return redirect('books.lab9_part1_listbooks')
+
+
+def lab9_part2_listbooks(request):
+    books = Book.objects.select_related('publisher').order_by('id')
+    return render(
+        request,
+        'bookmodule/lab9_part2_listbooks.html',
+        {'books': books},
+    )
+
+
+def lab9_part2_addbook(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab9_part2_listbooks')
+    else:
+        form = BookForm()
+
+    return render(
+        request,
+        'bookmodule/lab9_part2_book_form.html',
+        {
+            'form': form,
+            'page_title': 'Add Book',
+            'button_text': 'Add Book',
+        },
+    )
+
+
+def lab9_part2_editbook(request, id):
+    book = get_object_or_404(Book, id=id)
+
+    if request.method == 'POST':
+        form = BookForm(request.POST, instance=book)      #instance dont creat anouther book just edit the book u have
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab9_part2_listbooks')
+    else:
+        form = BookForm(instance=book)
+
+    return render(
+        request,
+        'bookmodule/lab9_part2_book_form.html',
+        {
+            'form': form,
+            'book': book,
+            'page_title': 'Edit Book',
+            'button_text': 'Update Book',
+        },
+    )
+
+
+def lab9_part2_deletebook(request, id):
+    book = get_object_or_404(Book, id=id)
+    book.delete()
+    return redirect('books.lab9_part2_listbooks')

@@ -1,0 +1,30 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 9 Part 2 - {{ page_title }}{% endblock title %}
+
+{% block content %}
+<h1>{{ page_title }} - Django Forms</h1>
+
+<form method="post">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div style="color: red;">
+        {{ form.non_field_errors }}
+    </div>
+    {% endif %}
+
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.errors %}
+        <span style="color: red;">{{ field.errors }}</span>
+        {% endif %}
+    </p>
+    {% endfor %}
+
+    <button type="submit">{{ button_text }}</button>
+    <a href="{% url 'books.lab9_part2_listbooks' %}">Cancel</a>
+</form>
+{% endblock content %}
