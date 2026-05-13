@@ -17,3 +17,24 @@
 .topnav a.active{
   color: #008CBA;
 }
+
+.messages {
+  list-style: none;
+  padding: 0;
+}
+
+.messages li {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #cccccc;
+}
+
+.messages .success {
+  color: #1b5e20;
+  background-color: #e8f5e9;
+}
+
+.messages .error {
+  color: #b71c1c;
+  background-color: #ffebee;
+}

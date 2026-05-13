@@ -6,10 +6,10 @@
   <meta name="keywords" content="Books, recent, Learning, library">
   <meta name="description" content="Books website">
   <meta name="author" content="author name">
-  <link rel="icon" href="{% static 'qu-icon.png' %}">
+  <link rel="icon" href="{% static 'images/qu-icon.png' %}">
   <meta charset="UTF-8">
  
-  <link rel="stylesheet" href="{% static 'styles.css' %}"> <!-- include css file -->
+  <link rel="stylesheet" href="{% static 'styles/styles.css' %}"> <!-- include css file -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  
   {% block stylesheets %}{% endblock stylesheets %}
@@ -17,6 +17,14 @@
 <body>
     
     {% include "includes/header.html" %}
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
  
     {% block content %} {% endblock content %}
  

@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 from django.db.models import Avg, Count, Max, Min, Sum
 from django.db.models.functions import Coalesce
+from django.contrib.auth.decorators import login_required
 
 from .forms import (
     Address2Form,
@@ -395,6 +396,7 @@ def lab9_part2_deletebook(request, id):
     return redirect('books.lab9_part2_listbooks')
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_students(request):
     students = Student.objects.select_related('address').order_by('name')
     addresses = Address.objects.order_by('city')
@@ -405,6 +407,7 @@ def lab10_task1_students(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_add_address(request):
     if request.method == 'POST':
         form = AddressForm(request.POST)
@@ -421,6 +424,7 @@ def lab10_task1_add_address(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_edit_address(request, id):
     address = get_object_or_404(Address, id=id)
     if request.method == 'POST':
@@ -438,6 +442,7 @@ def lab10_task1_edit_address(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_delete_address(request, id):
     address = get_object_or_404(Address, id=id)
     if request.method == 'POST':
@@ -451,6 +456,7 @@ def lab10_task1_delete_address(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_add_student(request):
     if request.method == 'POST':
         form = StudentForm(request.POST)
@@ -467,6 +473,7 @@ def lab10_task1_add_student(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_edit_student(request, id):
     student = get_object_or_404(Student, id=id)
     if request.method == 'POST':
@@ -484,6 +491,7 @@ def lab10_task1_edit_student(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task1_delete_student(request, id):
     student = get_object_or_404(Student, id=id)
     if request.method == 'POST':
@@ -497,6 +505,7 @@ def lab10_task1_delete_student(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_students(request):
     students = Student2.objects.prefetch_related('addresses').order_by('name')
     addresses = Address2.objects.order_by('city', 'street')
@@ -507,6 +516,7 @@ def lab10_task2_students(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_add_address(request):
     if request.method == 'POST':
         form = Address2Form(request.POST)
@@ -523,6 +533,7 @@ def lab10_task2_add_address(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_edit_address(request, id):
     address = get_object_or_404(Address2, id=id)
     if request.method == 'POST':
@@ -540,6 +551,7 @@ def lab10_task2_edit_address(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_delete_address(request, id):
     address = get_object_or_404(Address2, id=id)
     if request.method == 'POST':
@@ -553,6 +565,7 @@ def lab10_task2_delete_address(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_add_student(request):
     if request.method == 'POST':
         form = Student2Form(request.POST)
@@ -569,6 +582,7 @@ def lab10_task2_add_student(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_edit_student(request, id):
     student = get_object_or_404(Student2, id=id)
     if request.method == 'POST':
@@ -586,6 +600,7 @@ def lab10_task2_edit_student(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task2_delete_student(request, id):
     student = get_object_or_404(Student2, id=id)
     if request.method == 'POST':
@@ -599,6 +614,7 @@ def lab10_task2_delete_student(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task3_activities(request):
     activities = StudentActivity.objects.order_by('-created_at')
     return render(
@@ -608,6 +624,7 @@ def lab10_task3_activities(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task3_add_activity(request):
     if request.method == 'POST':
         form = StudentActivityForm(request.POST, request.FILES)
@@ -624,6 +641,7 @@ def lab10_task3_add_activity(request):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task3_edit_activity(request, id):
     activity = get_object_or_404(StudentActivity, id=id)
     if request.method == 'POST':
@@ -641,6 +659,7 @@ def lab10_task3_edit_activity(request, id):
     )
 
 
+@login_required(login_url='/users/login')
 def lab10_task3_delete_activity(request, id):
     activity = get_object_or_404(StudentActivity, id=id)
     if request.method == 'POST':
