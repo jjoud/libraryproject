@@ -1,0 +1,57 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 10 Task 1{% endblock title %}
+
+{% block content %}
+<h1>Lab 10 Task 1: Students and One Address</h1>
+<p>Each student is connected to one address using a ForeignKey field.</p>
+
+<p>
+  <a href="{% url 'books.lab10_task1_add_student' %}">Add Student</a> |
+  <a href="{% url 'books.lab10_task1_add_address' %}">Add Address</a> |
+  <a href="{% url 'books.lab10_task2_students' %}">Go to Task 2</a> |
+  <a href="{% url 'books.lab10_task3_activities' %}">Go to Task 3</a>
+</p>
+
+<h2>Students</h2>
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Address</th>
+    <th>Actions</th>
+  </tr>
+  {% for student in students %}
+  <tr>
+    <td>{{ student.name }}</td>
+    <td>{{ student.age }}</td>
+    <td>{{ student.address.city }}</td>
+    <td>
+      <a href="{% url 'books.lab10_task1_edit_student' student.id %}">Edit</a> |
+      <a href="{% url 'books.lab10_task1_delete_student' student.id %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="4">No students yet.</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Addresses</h2>
+<table border="1" cellpadding="8">
+  <tr>
+    <th>City</th>
+    <th>Actions</th>
+  </tr>
+  {% for address in addresses %}
+  <tr>
+    <td>{{ address.city }}</td>
+    <td>
+      <a href="{% url 'books.lab10_task1_edit_address' address.id %}">Edit</a> |
+      <a href="{% url 'books.lab10_task1_delete_address' address.id %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="2">No addresses yet.</td></tr>
+  {% endfor %}
+</table>
+{% endblock content %}

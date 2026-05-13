@@ -1,0 +1,14 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Delete Record{% endblock title %}
+
+{% block content %}
+<h1>Delete Record</h1>
+<p>Are you sure you want to delete "{{ object }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Yes, delete</button>
+  <a href="{% url cancel_url %}">Cancel</a>
+</form>
+{% endblock content %}

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Book
+from .models import Address, Address2, Book, Student, Student2, StudentActivity
 
 
 class BookForm(forms.ModelForm):
@@ -39,3 +39,54 @@ class BookForm(forms.ModelForm):
         if rating < 1 or rating > 5:
             raise forms.ValidationError('Rating must be between 1 and 5.')
         return rating
+
+
+class AddressForm(forms.ModelForm):
+    class Meta:
+        model = Address
+        fields = ['city']
+        widgets = {
+            'city': forms.TextInput(attrs={'placeholder': 'Enter city name'}),
+        }
+
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['name', 'age', 'address']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter student name'}),
+            'age': forms.NumberInput(attrs={'min': '1'}),
+        }
+
+
+class Address2Form(forms.ModelForm):
+    class Meta:
+        model = Address2
+        fields = ['city', 'street']
+        widgets = {
+            'city': forms.TextInput(attrs={'placeholder': 'Enter city name'}),
+            'street': forms.TextInput(attrs={'placeholder': 'Enter street name'}),
+        }
+
+
+class Student2Form(forms.ModelForm):
+    class Meta:
+        model = Student2
+        fields = ['name', 'age', 'addresses']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter student name'}),
+            'age': forms.NumberInput(attrs={'min': '1'}),
+            'addresses': forms.CheckboxSelectMultiple,
+        }
+
+
+class StudentActivityForm(forms.ModelForm):
+    class Meta:
+        model = StudentActivity
+        fields = ['title', 'description', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'placeholder': 'Activity title'}),
+            'description': forms.Textarea(attrs={'rows': 4}),
+            'image': forms.ClearableFileInput(attrs={'accept': 'image/*'}),
+        }

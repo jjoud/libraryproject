@@ -1,0 +1,65 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 10 Task 2{% endblock title %}
+
+{% block content %}
+<h1>Lab 10 Task 2: Students and Multiple Addresses</h1>
+<p>Students and addresses are connected with a ManyToManyField.</p>
+
+<p>
+  <a href="{% url 'books.lab10_task2_add_student' %}">Add Student</a> |
+  <a href="{% url 'books.lab10_task2_add_address' %}">Add Address</a> |
+  <a href="{% url 'books.lab10_task1_students' %}">Go to Task 1</a> |
+  <a href="{% url 'books.lab10_task3_activities' %}">Go to Task 3</a>
+</p>
+
+<h2>Students</h2>
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Addresses</th>
+    <th>Actions</th>
+  </tr>
+  {% for student in students %}
+  <tr>
+    <td>{{ student.name }}</td>
+    <td>{{ student.age }}</td>
+    <td>
+      {% for address in student.addresses.all %}
+        {{ address }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        No addresses selected
+      {% endfor %}
+    </td>
+    <td>
+      <a href="{% url 'books.lab10_task2_edit_student' student.id %}">Edit</a> |
+      <a href="{% url 'books.lab10_task2_delete_student' student.id %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="4">No students yet.</td></tr>
+  {% endfor %}
+</table>
+
+<h2>Addresses</h2>
+<table border="1" cellpadding="8">
+  <tr>
+    <th>City</th>
+    <th>Street</th>
+    <th>Actions</th>
+  </tr>
+  {% for address in addresses %}
+  <tr>
+    <td>{{ address.city }}</td>
+    <td>{{ address.street }}</td>
+    <td>
+      <a href="{% url 'books.lab10_task2_edit_address' address.id %}">Edit</a> |
+      <a href="{% url 'books.lab10_task2_delete_address' address.id %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="3">No addresses yet.</td></tr>
+  {% endfor %}
+</table>
+{% endblock content %}

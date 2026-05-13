@@ -1,0 +1,40 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Lab 10 Task 3{% endblock title %}
+
+{% block content %}
+<h1>Lab 10 Task 3: Student Activities with Images</h1>
+<p>This table uses an ImageField and the form uses enctype="multipart/form-data".</p>
+
+<p>
+  <a href="{% url 'books.lab10_task3_add_activity' %}">Add Activity</a> |
+  <a href="{% url 'books.lab10_task1_students' %}">Go to Task 1</a> |
+  <a href="{% url 'books.lab10_task2_students' %}">Go to Task 2</a>
+</p>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Image</th>
+    <th>Title</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+  {% for activity in activities %}
+  <tr>
+    <td>
+      {% if activity.image %}
+        <img src="{{ activity.image.url }}" alt="{{ activity.title }}" width="140">
+      {% endif %}
+    </td>
+    <td>{{ activity.title }}</td>
+    <td>{{ activity.description }}</td>
+    <td>
+      <a href="{% url 'books.lab10_task3_edit_activity' activity.id %}">Edit</a> |
+      <a href="{% url 'books.lab10_task3_delete_activity' activity.id %}">Delete</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="4">No activities yet.</td></tr>
+  {% endfor %}
+</table>
+{% endblock content %}

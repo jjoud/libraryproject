@@ -3,8 +3,15 @@ from django.db.models import Q
 from django.db.models import Avg, Count, Max, Min, Sum
 from django.db.models.functions import Coalesce
 
-from .forms import BookForm
-from .models import Book, Publisher, Student
+from .forms import (
+    Address2Form,
+    AddressForm,
+    BookForm,
+    Student2Form,
+    StudentActivityForm,
+    StudentForm,
+)
+from .models import Address, Address2, Book, Publisher, Student, Student2, StudentActivity
 #python manage.py runserver
 
 def __getBooksList():
@@ -386,3 +393,262 @@ def lab9_part2_deletebook(request, id):
     book = get_object_or_404(Book, id=id)
     book.delete()
     return redirect('books.lab9_part2_listbooks')
+
+
+def lab10_task1_students(request):
+    students = Student.objects.select_related('address').order_by('name')
+    addresses = Address.objects.order_by('city')
+    return render(
+        request,
+        'bookmodule/lab10_task1_students.html',
+        {'students': students, 'addresses': addresses},
+    )
+
+
+def lab10_task1_add_address(request):
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task1_students')
+    else:
+        form = AddressForm()
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Add Address', 'button_text': 'Save Address'},
+    )
+
+
+def lab10_task1_edit_address(request, id):
+    address = get_object_or_404(Address, id=id)
+    if request.method == 'POST':
+        form = AddressForm(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task1_students')
+    else:
+        form = AddressForm(instance=address)
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Edit Address', 'button_text': 'Update Address'},
+    )
+
+
+def lab10_task1_delete_address(request, id):
+    address = get_object_or_404(Address, id=id)
+    if request.method == 'POST':
+        address.delete()
+        return redirect('books.lab10_task1_students')
+
+    return render(
+        request,
+        'bookmodule/lab10_confirm_delete.html',
+        {'object': address, 'cancel_url': 'books.lab10_task1_students'},
+    )
+
+
+def lab10_task1_add_student(request):
+    if request.method == 'POST':
+        form = StudentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task1_students')
+    else:
+        form = StudentForm()
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Add Student', 'button_text': 'Save Student'},
+    )
+
+
+def lab10_task1_edit_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == 'POST':
+        form = StudentForm(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task1_students')
+    else:
+        form = StudentForm(instance=student)
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Edit Student', 'button_text': 'Update Student'},
+    )
+
+
+def lab10_task1_delete_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('books.lab10_task1_students')
+
+    return render(
+        request,
+        'bookmodule/lab10_confirm_delete.html',
+        {'object': student, 'cancel_url': 'books.lab10_task1_students'},
+    )
+
+
+def lab10_task2_students(request):
+    students = Student2.objects.prefetch_related('addresses').order_by('name')
+    addresses = Address2.objects.order_by('city', 'street')
+    return render(
+        request,
+        'bookmodule/lab10_task2_students.html',
+        {'students': students, 'addresses': addresses},
+    )
+
+
+def lab10_task2_add_address(request):
+    if request.method == 'POST':
+        form = Address2Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task2_students')
+    else:
+        form = Address2Form()
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Add Many-to-Many Address', 'button_text': 'Save Address'},
+    )
+
+
+def lab10_task2_edit_address(request, id):
+    address = get_object_or_404(Address2, id=id)
+    if request.method == 'POST':
+        form = Address2Form(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task2_students')
+    else:
+        form = Address2Form(instance=address)
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Edit Many-to-Many Address', 'button_text': 'Update Address'},
+    )
+
+
+def lab10_task2_delete_address(request, id):
+    address = get_object_or_404(Address2, id=id)
+    if request.method == 'POST':
+        address.delete()
+        return redirect('books.lab10_task2_students')
+
+    return render(
+        request,
+        'bookmodule/lab10_confirm_delete.html',
+        {'object': address, 'cancel_url': 'books.lab10_task2_students'},
+    )
+
+
+def lab10_task2_add_student(request):
+    if request.method == 'POST':
+        form = Student2Form(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task2_students')
+    else:
+        form = Student2Form()
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Add Many-to-Many Student', 'button_text': 'Save Student'},
+    )
+
+
+def lab10_task2_edit_student(request, id):
+    student = get_object_or_404(Student2, id=id)
+    if request.method == 'POST':
+        form = Student2Form(request.POST, instance=student)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task2_students')
+    else:
+        form = Student2Form(instance=student)
+
+    return render(
+        request,
+        'bookmodule/lab10_form.html',
+        {'form': form, 'title': 'Edit Many-to-Many Student', 'button_text': 'Update Student'},
+    )
+
+
+def lab10_task2_delete_student(request, id):
+    student = get_object_or_404(Student2, id=id)
+    if request.method == 'POST':
+        student.delete()
+        return redirect('books.lab10_task2_students')
+
+    return render(
+        request,
+        'bookmodule/lab10_confirm_delete.html',
+        {'object': student, 'cancel_url': 'books.lab10_task2_students'},
+    )
+
+
+def lab10_task3_activities(request):
+    activities = StudentActivity.objects.order_by('-created_at')
+    return render(
+        request,
+        'bookmodule/lab10_task3_activities.html',
+        {'activities': activities},
+    )
+
+
+def lab10_task3_add_activity(request):
+    if request.method == 'POST':
+        form = StudentActivityForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task3_activities')
+    else:
+        form = StudentActivityForm()
+
+    return render(
+        request,
+        'bookmodule/lab10_file_form.html',
+        {'form': form, 'title': 'Add Student Activity', 'button_text': 'Save Activity'},
+    )
+
+
+def lab10_task3_edit_activity(request, id):
+    activity = get_object_or_404(StudentActivity, id=id)
+    if request.method == 'POST':
+        form = StudentActivityForm(request.POST, request.FILES, instance=activity)
+        if form.is_valid():
+            form.save()
+            return redirect('books.lab10_task3_activities')
+    else:
+        form = StudentActivityForm(instance=activity)
+
+    return render(
+        request,
+        'bookmodule/lab10_file_form.html',
+        {'form': form, 'title': 'Edit Student Activity', 'button_text': 'Update Activity'},
+    )
+
+
+def lab10_task3_delete_activity(request, id):
+    activity = get_object_or_404(StudentActivity, id=id)
+    if request.method == 'POST':
+        activity.delete()
+        return redirect('books.lab10_task3_activities')
+
+    return render(
+        request,
+        'bookmodule/lab10_confirm_delete.html',
+        {'object': activity, 'cancel_url': 'books.lab10_task3_activities'},
+    )
